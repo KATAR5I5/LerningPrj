@@ -8,33 +8,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Test4 {
     public static void main(String[] args) throws IOException {
 //        Integer[] ints = new Integer[50];
 //        m1(ints);
-        Path directory = Path.of("C:\\Users\\User\\Downloads\\Stream API Lection");
-        String name = getFileNameMAxWeight(directory);
+        Path directory = Path.of("F:\\learn\\Видео курсы\\dmDev");
+        String name = renameFileStartWithInAllDirectory(directory,"[Udemy] " );
         System.out.println(name);
     }
 
-    private static String getFileNameMAxWeight(Path directory) throws IOException {
-        var s = Files.list(directory)
+    private static String renameFileStartWithInAllDirectory(Path directory,String startWith) throws IOException {
+
+
+        var listPaths = Files.list(directory)
                 .filter(path -> !Files.isDirectory(path))
-//                .peek(System.out::println)
-//                .max((e1, e2) -> {
-//                    try {
-//                        return Long.compare(Files.size(e1), Files.size(e2));
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                })
-//                .get();
+                .peek(System.out::println)
                 .peek(e -> {
                     String name = e.getFileName().toString();
-                    if (name.contains("Stream API. Часть ")) {
-                        String targetName = name.replaceAll("Stream API. Часть ", "");
+                    if (name.startsWith(startWith)) {
+                        String targetName = name.replaceAll("\\[" + startWith.substring(1), "");
                         try {
                             Files.move(e, e.resolveSibling(targetName));
                         } catch (IOException ex) {
@@ -42,9 +35,32 @@ public class Test4 {
                         }
                     }
                 })
-
                 .collect(Collectors.toList());
-        System.out.println(s);
+
+
+//        var s = listPaths.stream()
+//                .flatMap(path -> {
+//                    try {
+//                        return Files.list(path)
+//                                .peek(e -> {
+//                                    String name = e.getFileName().toString();
+//                                    if (name.startsWith("[SW.BAND] ")) {
+//                                        String targetName = name.replaceAll("\\[SW.BAND\\] ", "");
+//                                        try {
+//                                            Files.move(e, e.resolveSibling(targetName));
+//                                        } catch (IOException ex) {
+//                                            throw new RuntimeException(ex);
+//                                        }
+//                                    }
+//                                });
+//                    } catch (IOException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                })
+//
+//
+//                .collect(Collectors.toList());
+//        System.out.println(s);
 
         return null;
     }

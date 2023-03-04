@@ -18,7 +18,7 @@ public class Test_6_Collect {
     */
     static void task6Method3() {
         List<Integer> list = Data.integerList;
-        list.stream()
+        Set <Integer> s=list.stream()
                 .collect(HashSet::new, (set, el) -> set.add(el), (set1, set2) -> set1.addAll(set2));
 
     }
@@ -58,14 +58,14 @@ public class Test_6_Collect {
 //        Function<String,Boolean> = s->s.chars()
 //                .mapToObj(ch -> (char) ch)
 //                .noneMatch(Character::isDigit);
-        var result = list.stream()
-                .filter(s -> {
-                    return s.chars()
-                            .mapToObj(ch -> (char) ch)
-                            .noneMatch(Character::isDigit);
-                })
-                .collect(Collectors.groupingBy());
-        System.out.println(result);
+//        var result = list.stream()
+//                .filter(s -> {
+//                    return s.chars()
+//                            .mapToObj(ch -> (char) ch)
+//                            .noneMatch(Character::isDigit);
+//                })
+//                .collect(Collectors.groupingBy());
+//        System.out.println(result);
     }
 
 

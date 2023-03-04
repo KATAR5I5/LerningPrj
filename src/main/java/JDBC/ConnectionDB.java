@@ -24,6 +24,13 @@ public class ConnectionDB {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
